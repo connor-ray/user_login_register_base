@@ -1,0 +1,19 @@
+<h1>Login Page</h1>
+
+<!-- this displays any errors that might occur from entering the form data wrong; it just iterates through that @errors array, displaying any errors it finds, which should only ever be one error at a time, and which gets set in our routes depending on what went wrong -->
+<% if @errors %>
+   <% @errors.each do |error| %>
+     <p><%= error %></p>
+   <% end %>
+ <% end %>
+
+
+<!-- this is the form that allows the user to enter their info to login
+the action specifies which route gets triggered in the sessions_controller.rb-->
+<form action="/sessions" method="POST">
+<!-- here the input name aren't nested inside user because they're not being stored in the database, they're just being checked against what already exists in the database. also there's not many of them so it's not easier/more efficient to nest them like it was for the register form. -->
+  <input type='text' name='username' placeholder="username">
+  <input type='password' name='password' placeholder="password">
+  <!-- clicking this submit buttons triggers the form action and send params back to the post route in sessions_controller.rb; the params hash will contain the keys :email and :password -->
+  <input type='submit' value='Login'>
+</form>

@@ -1,0 +1,23 @@
+<h1>Register Page</h1>
+
+<!-- this displays any errors that might occur from entering the form data wrong; it just iterates through that @errors array, displaying any errors it finds, which should only ever be one error at a time, and which gets set in our routes depending on what went wrong -->
+<% if @errors %>
+   <% @errors.each do |error| %>
+     <p><%= error %></p>
+   <% end %>
+ <% end %>
+
+<!-- this is the form that allows the user to enter their info to register
+the action specifies which route gets triggered in the users_controller.rb-->
+<form action="/users" method="POST">
+	<!-- all of these input fields have a name that is user[] with the specific name inside so that we can access all of them through the users key in params in our routes -->
+  <input type='text' name='user[first_name]' placeholder="first name">
+  <input type='text' name='user[last_name]' placeholder="last name">
+  <input type='text' name='user[username]' placeholder="username">
+  <input type='text' name='user[email]' placeholder="email">
+  <input type='password' name='user[password]' placeholder="password">
+  <!-- password confirmation isn't nested in user because it's not an attribute that will be stored in the database for user. it's just a temporary input to check that their password was entered correctly. -->
+  <input type='password' name='password_confirmation' placeholder="confirm password">
+  <!-- clicking this submit buttons triggers the form action and send params back to the post route in users_controller.rb; the params hash will contain the keys :user and :password_confirmation. the user key will contain a hash that has all the other info as keys inside of it -->
+  <input type='submit' value='Register'>
+</form>

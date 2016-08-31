@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 
+    normalize.css removes cross-browser differences in defaults, e.g.,
+    differences in how form elements appear between Firefox and IE
+    See: http://necolas.github.com/normalize.css/
+  -->
+  <link rel="stylesheet" href="/css/normalize.css">
+  <!--
+    application.css is where you put your styles
+  -->
+  <link rel="stylesheet" href="/css/application.css">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/js/application.js"></script>
+
+  <title></title>
+</head>
+<body>
+
+  <!-- creates a nav bar that displays links to home on every page. Conditionally displays login and register buttons or profile page link and logout button depending on whether user is logged in or not. -->
+  <nav>
+    <!-- this links back to home page -->
+    <a href="/">Home</a>
+    <!-- this checks if a user is currently logged in -->
+    <% if current_user %>
+       <!-- this links to user profile page using the user's id -->
+       <a href="/users/<%= current_user.id %> ">Profile Page</a>
+       <!-- this is the logout button. it's a form that deletes the session, which logs the user out. it uses the hidden input so that it turns the post method into a delete route and so that all that's visible is the logout button. -->
+       <form action="/sessions" method="POST">
+         <input type="hidden" name="_method" value="DELETE">
+         <input type="submit" value="Logout">
+       </form>
+    <!-- if no user is currently logged in, it displays the register and login buttons instead -->
+    <% else %>
+      <!-- these links trigger the corresponding get routes in their respective controllers -->
+       <a href="/users/new">Register</a>
+       <a href="/sessions/new">Login</a>
+     <% end %>
+  </nav>
+  <%= yield %>
+</body>
+</html>
